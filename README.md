@@ -1,283 +1,219 @@
-🏙️ Smart City Management System (Console-Based)
+# 🏙️ Smart City Management System (Console-Based)
 
-A console-based Smart City simulation system implemented in C++, designed to demonstrate core and advanced Data Structures through a realistic, real-world problem domain.
+A console-based Smart City simulation system implemented in C++, designed to demonstrate core and advanced Data Structures through a realistic, real-world problem domain. This project models a city's transport, education, medical, commercial, public facilities, and population systems, using custom-built data structures (no STL shortcuts) to manage, search, and optimize city operations.
 
-This project models a city’s transport, education, medical, commercial, public facilities, and population systems, using custom-built data structures (no STL shortcuts) to manage, search, and optimize city operations.
+---
 
-📌 Project Objectives
+## 📌 Project Objectives
 
-Demonstrate deep understanding of Data Structures
+- Demonstrate deep understanding of Data Structures
+- Apply DS concepts to a realistic system design
+- Build scalable, modular, and extensible architecture
+- Practice algorithmic thinking (graphs, heaps, hashing, trees)
+- Serve as a strong academic + portfolio project
 
-Apply DS concepts to a realistic system design
+---
 
-Build scalable, modular, and extensible architecture
-
-Practice algorithmic thinking (graphs, heaps, hashing, trees)
-
-Serve as a strong academic + portfolio project
-
-🧠 System Architecture Overview
+## 🧠 System Architecture Overview
 
 The system is divided into four major layers:
 
-Core Data Structures
-
-Business Entities
-
-Management Modules (Business Logic)
-
-Main Smart City Controller
+1. **Core Data Structures**
+2. **Business Entities**
+3. **Management Modules (Business Logic)**
+4. **Main Smart City Controller**
 
 Each layer is loosely coupled and interacts through well-defined interfaces.
 
-1️⃣ Core Data Structures Layer
+---
+
+## 1️⃣ Core Data Structures Layer
 
 All data structures are implemented from scratch.
 
-🔹 Graph (Adjacency List)
+### 🔹 Graph (Adjacency List)
 
 Used to represent the city road network.
 
-Features
+**Features:**
+- Weighted edges (distance between locations)
+- Dijkstra's Algorithm (shortest path)
+- BFS / DFS traversal
+- Nearest location search
 
-Weighted edges (distance between locations)
+**Used for:**
+- Transport routing
+- Nearest hospital / school / mall
+- Facility proximity queries
 
-Dijkstra’s Algorithm (shortest path)
+**Time Complexity:**
+- Add Vertex: `O(1)`
+- Add Edge: `O(1)`
+- Dijkstra: `O((V + E) log V)`
+- BFS / DFS: `O(V + E)`
 
-BFS / DFS traversal
+---
 
-Nearest location search
-
-Used for
-
-Transport routing
-
-Nearest hospital / school / mall
-
-Facility proximity queries
-
-Time Complexity
-
-Add Vertex: O(1)
-
-Add Edge: O(1)
-
-Dijkstra: O((V + E) log V)
-
-BFS / DFS: O(V + E)
-
-🔹 Hash Table (Separate Chaining)
+### 🔹 Hash Table (Separate Chaining)
 
 Custom hash table using linked list chaining.
 
-Used for
+**Used for:**
+- Citizen lookup by CNIC
+- Medicine search
+- Product search
+- Bus & hospital registries
 
-Citizen lookup by CNIC
+**Time Complexity:**
+- Insert: `O(1)` average
+- Search: `O(1)` average
+- Delete: `O(1)` average
 
-Medicine search
+---
 
-Product search
-
-Bus & hospital registries
-
-Time Complexity
-
-Insert: O(1) average
-
-Search: O(1) average
-
-Delete: O(1) average
-
-🔹 N-ary Tree (General Tree)
+### 🔹 N-ary Tree (General Tree)
 
 Supports dynamic number of children per node.
 
-Used for
+**Used for:**
+- School hierarchy (School → Department → Class → Students)
+- Housing hierarchy (Sector → Street → House → Family)
+- Administrative city divisions
 
-School hierarchy (School → Department → Class → Students)
+**Time Complexity:**
+- Insert: `O(1)` (with parent reference)
+- Search: `O(n)`
+- Traversal: `O(n)`
 
-Housing hierarchy (Sector → Street → House → Family)
+---
 
-Administrative city divisions
-
-Time Complexity
-
-Insert: O(1) (with parent reference)
-
-Search: O(n)
-
-Traversal: O(n)
-
-🔹 Priority Queue (Binary Heap)
+### 🔹 Priority Queue (Binary Heap)
 
 Supports Min-Heap & Max-Heap modes.
 
-Used for
+**Used for:**
+- Emergency patient prioritization
+- School ranking system
+- Nearest facility prioritization
 
-Emergency patient prioritization
+**Time Complexity:**
+- Insert: `O(log n)`
+- Extract: `O(log n)`
+- Peek: `O(1)`
 
-School ranking system
+---
 
-Nearest facility prioritization
+### 🔹 Linked List (Singly Linked)
 
-Time Complexity
+**Used for:**
+- Bus routes
+- Hash table collision handling
+- Student lists
+- Dynamic collections
 
-Insert: O(log n)
+---
 
-Extract: O(log n)
+### 🔹 Stack (Linked List Based)
 
-Peek: O(1)
+**Used for:**
+- Undo operations
+- Route traversal history
+- Survey history tracking
 
-🔹 Linked List (Singly Linked)
+---
 
-Used for
+### 🔹 Circular Queue (Array Based)
 
-Bus routes
+**Used for:**
+- Passenger boarding simulation
+- FIFO service queues
 
-Hash table collision handling
+---
 
-Student lists
-
-Dynamic collections
-
-🔹 Stack (Linked List Based)
-
-Used for
-
-Undo operations
-
-Route traversal history
-
-Survey history tracking
-
-🔹 Circular Queue (Array Based)
-
-Used for
-
-Passenger boarding simulation
-
-FIFO service queues
-
-2️⃣ Business Entities Layer
+## 2️⃣ Business Entities Layer
 
 Represents real-world city components.
 
-🚍 Transport
+### 🚍 Transport
+- `Bus`
+- `BusStop`
 
-Bus
+### 🏫 Education
+- `School`
+- `Department`
+- `Class`
+- `Student`
 
-BusStop
+### 🏥 Medical
+- `Hospital`
+- `Doctor`
+- `Patient`
+- `Pharmacy`
+- `Medicine`
 
-🏫 Education
+### 🛍️ Commercial
+- `ShoppingMall`
+- `Product`
 
-School
-
-Department
-
-Class
-
-Student
-
-🏥 Medical
-
-Hospital
-
-Doctor
-
-Patient
-
-Pharmacy
-
-Medicine
-
-🛍️ Commercial
-
-ShoppingMall
-
-Product
-
-🏢 Public & Population
-
-PublicFacility
-
-Citizen
-
-House
+### 🏢 Public & Population
+- `PublicFacility`
+- `Citizen`
+- `House`
 
 Each entity is data-driven and managed through specialized managers.
 
-3️⃣ Management Modules (Business Logic)
+---
+
+## 3️⃣ Management Modules (Business Logic)
 
 Each manager acts as a controller for its domain.
 
-🚦 TransportManager
+### 🚦 TransportManager
+- City graph management
+- Bus & stop registration
+- Shortest path finding
+- Nearest bus lookup
 
-City graph management
+### 🎓 EducationManager
+- School & department management
+- Student enrollment
+- School ranking system
+- Nearest school search
 
-Bus & stop registration
+### 🏥 MedicalManager
+- Hospital & doctor registry
+- Emergency bed allocation
+- Medicine search
+- Nearest hospital lookup
 
-Shortest path finding
+### 🛒 CommercialManager
+- Mall & product management
+- Category-based product search
+- Nearest mall lookup
 
-Nearest bus lookup
+### 🏛️ FacilityManager
+- Public facility registry
+- Type-based and proximity searches
 
-🎓 EducationManager
+### 👨‍👩‍👧 PopulationManager
+- Citizen registration
+- Housing hierarchy management
+- Population statistics
+- Gender ratio & age distribution
 
-School & department management
+---
 
-Student enrollment
-
-School ranking system
-
-Nearest school search
-
-🏥 MedicalManager
-
-Hospital & doctor registry
-
-Emergency bed allocation
-
-Medicine search
-
-Nearest hospital lookup
-
-🛒 CommercialManager
-
-Mall & product management
-
-Category-based product search
-
-Nearest mall lookup
-
-🏛️ FacilityManager
-
-Public facility registry
-
-Type-based and proximity searches
-
-👨‍👩‍👧 PopulationManager
-
-Citizen registration
-
-Housing hierarchy management
-
-Population statistics
-
-Gender ratio & age distribution
-
-4️⃣ SmartCitySystem (Main Controller)
+## 4️⃣ SmartCitySystem (Main Controller)
 
 Acts as the central orchestrator.
 
-Responsibilities
+**Responsibilities:**
+- System initialization
+- Sample data loading
+- Menu-driven interaction
+- Delegating requests to managers
 
-System initialization
-
-Sample data loading
-
-Menu-driven interaction
-
-Delegating requests to managers
-
+```
 SmartCitySystem
 ├── TransportManager
 ├── EducationManager
@@ -285,67 +221,63 @@ SmartCitySystem
 ├── CommercialManager
 ├── FacilityManager
 └── PopulationManager
+```
 
-🧪 Key Algorithms Used
+---
 
-Dijkstra’s Shortest Path
+## 🧪 Key Algorithms Used
 
-BFS / DFS
+- Dijkstra's Shortest Path
+- BFS / DFS
+- Binary Heap Operations
+- Hashing with Collision Handling
+- Tree Traversals
+- Priority-Based Scheduling
 
-Binary Heap Operations
+---
 
-Hashing with Collision Handling
+## 🛠️ Technologies Used
 
-Tree Traversals
+- **Language:** C++
+- **Paradigm:** Object-Oriented Programming
+- **Interface:** Console-based
+- **Data Structures:** Custom (No STL dependency)
 
-Priority-Based Scheduling
+---
 
-🛠️ Technologies Used
+## 🎯 Learning Outcomes
 
-Language: C++
+- Strong grasp of Data Structures internals
+- Real-world system design
+- Efficient algorithm selection
+- Clean modular architecture
+- Practical use of DS beyond textbook examples
 
-Paradigm: Object-Oriented Programming
+---
 
-Interface: Console-based
+## 📌 Future Enhancements
 
-Data Structures: Custom (No STL dependency)
+- File persistence (save/load city data)
+- GUI version (Qt-based)
+- Map visualization
+- Multi-threaded simulations
+- API-based city services
 
-🎯 Learning Outcomes
+---
 
-Strong grasp of Data Structures internals
-
-Real-world system design
-
-Efficient algorithm selection
-
-Clean modular architecture
-
-Practical use of DS beyond textbook examples
-
-📌 Future Enhancements
-
-File persistence (save/load city data)
-
-GUI version (Qt-based)
-
-Map visualization
-
-Multi-threaded simulations
-
-API-based city services
-
-📷 UML Diagram
+## 📷 UML Diagram
 
 The complete UML diagram is included to visualize:
+- Class relationships
+- Data flow
+- Architectural separation
 
-Class relationships
+---
 
-Data flow
+## 👤 Author
 
-Architectural separation
-
-👤 Author
-
-Muhammad Farhan
-Bachelor’s in Computer Science
+**Muhammad Farhan**  
+Bachelor's in Computer Science  
 Focus: Data Structures, Systems Design, C++
+
+---
