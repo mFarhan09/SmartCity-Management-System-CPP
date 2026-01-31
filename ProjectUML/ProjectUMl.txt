@@ -1,0 +1,566 @@
+@startuml Smart City System Architecture
+
+' ============================================
+' CORE DATA STRUCTURES LAYER
+' ============================================
+
+package "Core Data Structures" <<Rectangle>> {
+    
+    class Graph {
+        - int numVertices
+        - Node** adjacencyList
+        + addVertex(id: string, name: string, lat: double, lon: double)
+        + addEdge(from: string, to: string, weight: double)
+        + dijkstra(start: string, end: string): vector<string>
+        + findNearest(location: string, type: string): string
+        + BFS(start: string)
+        + DFS(start: string)
+    }
+    
+    class GraphNode {
+        - string id
+        - string name
+        - double latitude
+        - double longitude
+        - string type
+        - EdgeNode* edges
+        + addEdge(destination: string, weight: double)
+    }
+    
+    class EdgeNode {
+        - string destinationId
+        - double weight
+        - EdgeNode* next
+    }
+    
+    class HashTable {
+        - int tableSize
+        - HashNode** table
+        - int currentSize
+        + insert(key: string, value: void*)
+        + search(key: string): void*
+        + remove(key: string): bool
+        + display()
+        - hashFunction(key: string): int
+        - resize()
+    }
+    
+    class HashNode {
+        - string key
+        - void* value
+        - HashNode* next
+    }
+    
+    class NaryTree {
+        - TreeNode* root
+        + insert(parent: string, child: TreeNode*)
+        + search(id: string): TreeNode*
+        + traverse(): void
+        + getHeight(): int
+        + generateReport(): void
+    }
+    
+    class TreeNode {
+        - string id
+        - string name
+        - void* data
+        - TreeNode** children
+        - int numChildren
+        - int capacity
+        + addChild(child: TreeNode*)
+        + removeChild(id: string)
+    }
+    
+    class PriorityQueue {
+        - HeapNode* heap
+        - int size
+        - int capacity
+        - bool isMaxHeap
+        + insert(priority: int, data: void*)
+        + extractTop(): void*
+        + peek(): void*
+        + isEmpty(): bool
+        - heapifyUp(index: int)
+        - heapifyDown(index: int)
+    }
+    
+    class HeapNode {
+        - int priority
+        - void* data
+    }
+    
+    class LinkedList {
+        - ListNode* head
+        - ListNode* tail
+        - int size
+        + insertAtEnd(data: void*)
+        + insertAtBeginning(data: void*)
+        + deleteNode(data: void*)
+        + search(data: void*): ListNode*
+        + display()
+    }
+    
+    class ListNode {
+        - void* data
+        - ListNode* next
+    }
+    
+    class CircularQueue {
+        - void** items
+        - int front
+        - int rear
+        - int capacity
+        - int size
+        + enqueue(data: void*)
+        + dequeue(): void*
+        + isFull(): bool
+        + isEmpty(): bool
+    }
+    
+    class Stack {
+        - StackNode* top
+        - int size
+        + push(data: void*)
+        + pop(): void*
+        + peek(): void*
+        + isEmpty(): bool
+    }
+    
+    class StackNode {
+        - void* data
+        - StackNode* next
+    }
+}
+
+' Relationships within Core DS
+Graph *-- GraphNode
+GraphNode *-- EdgeNode
+HashTable *-- HashNode
+NaryTree *-- TreeNode
+PriorityQueue *-- HeapNode
+LinkedList *-- ListNode
+Stack *-- StackNode
+
+' ============================================
+' BUSINESS ENTITIES
+' ============================================
+
+package "Business Entities" <<Rectangle>> {
+    
+    class Bus {
+        - string busNumber
+        - string company
+        - string currentStop
+        - LinkedList* route
+        - int capacity
+        - int currentPassengers
+        + moveToNextStop()
+        + getRouteInfo(): string
+    }
+    
+    class BusStop {
+        - string stopId
+        - string name
+        - double latitude
+        - double longitude
+        - LinkedList* busesAtStop
+    }
+    
+    class School {
+        - string schoolId
+        - string name
+        - string sector
+        - double rating
+        - string* subjects
+        - int numSubjects
+        - NaryTree* organogram
+        - double latitude
+        - double longitude
+    }
+    
+    class Department {
+        - string deptId
+        - string name
+        - string headOfDept
+        - int numClasses
+    }
+    
+    class Class {
+        - string classId
+        - string className
+        - string teacher
+        - LinkedList* students
+        - int capacity
+    }
+    
+    class Student {
+        - string studentId
+        - string name
+        - int age
+        - string section
+        - double* grades
+    }
+    
+    class Hospital {
+        - string hospitalId
+        - string name
+        - string sector
+        - int totalBeds
+        - int availableBeds
+        - string* specializations
+        - double latitude
+        - double longitude
+        - PriorityQueue* emergencyQueue
+    }
+    
+    class Doctor {
+        - string doctorId
+        - string name
+        - string specialization
+        - string hospitalId
+        - bool isAvailable
+    }
+    
+    class Patient {
+        - string patientId
+        - string name
+        - int age
+        - string condition
+        - int severity
+    }
+    
+    class Pharmacy {
+        - string pharmacyId
+        - string name
+        - string sector
+        - HashTable* medicines
+    }
+    
+    class Medicine {
+        - string medicineName
+        - string formula
+        - double price
+        - int stock
+        - string pharmacyId
+    }
+    
+    class ShoppingMall {
+        - string mallId
+        - string name
+        - string sector
+        - HashTable* products
+        - double latitude
+        - double longitude
+    }
+    
+    class Product {
+        - string productId
+        - string name
+        - string category
+        - double price
+        - string mallId
+    }
+    
+    class PublicFacility {
+        - string facilityId
+        - string name
+        - string type
+        - string sector
+        - double latitude
+        - double longitude
+    }
+    
+    class Citizen {
+        - string cnic
+        - string name
+        - int age
+        - string gender
+        - string occupation
+        - string sector
+        - string street
+        - string houseNo
+    }
+    
+    class House {
+        - string houseNo
+        - string street
+        - string sector
+        - NaryTree* familyTree
+        - int numResidents
+    }
+}
+
+' Relationships within Business Entities
+School *-- Department
+Department *-- Class
+Class *-- Student
+Hospital *-- Doctor
+Hospital *-- Patient
+Pharmacy *-- Medicine
+ShoppingMall *-- Product
+
+' ============================================
+' MANAGEMENT MODULES (Business Logic)
+' ============================================
+
+package "Management Modules" <<Rectangle>> {
+    
+    class TransportManager {
+        - Graph* cityGraph
+        - HashTable* busRegistry
+        - LinkedList* allBuses
+        - HashTable* stopRegistry
+        + registerBusCompany(name: string)
+        + registerBus(bus: Bus)
+        + addBusStop(stop: BusStop)
+        + connectStops(from: string, to: string, distance: double)
+        + trackBusLocation(busNumber: string): string
+        + findShortestPath(from: string, to: string): vector<string>
+        + findNearestBus(location: string): Bus*
+        + getBusDetails(busNumber: string): Bus*
+    }
+    
+    class EducationManager {
+        - HashTable* schoolRegistry
+        - NaryTree* sectorTree
+        - PriorityQueue* schoolRankings
+        - Graph* cityGraph
+        + registerSchool(school: School)
+        + addDepartment(schoolId: string, dept: Department)
+        + addStudent(schoolId: string, deptId: string, classId: string, student: Student)
+        + searchSchoolsBySubject(subject: string): vector<School*>
+        + getTopRankedSchools(count: int): vector<School*>
+        + findNearestSchool(location: string): School*
+        + generateSchoolReport(schoolId: string): string
+    }
+    
+    class MedicalManager {
+        - HashTable* hospitalRegistry
+        - HashTable* doctorRegistry
+        - HashTable* pharmacyRegistry
+        - HashTable* medicineRegistry
+        - Graph* cityGraph
+        + registerHospital(hospital: Hospital)
+        + registerDoctor(doctor: Doctor)
+        + registerPharmacy(pharmacy: Pharmacy)
+        + addMedicine(medicine: Medicine)
+        + searchMedicine(name: string): Medicine*
+        + searchMedicineByFormula(formula: string): vector<Medicine*>
+        + findNearestHospital(location: string): Hospital*
+        + allocateEmergencyBed(patient: Patient): bool
+        + checkBedAvailability(hospitalId: string): int
+    }
+    
+    class CommercialManager {
+        - HashTable* mallRegistry
+        - HashTable* productRegistry
+        - Graph* cityGraph
+        + registerMall(mall: ShoppingMall)
+        + addProduct(product: Product)
+        + searchProductByCategory(category: string): vector<Product*>
+        + findNearestMall(location: string): ShoppingMall*
+        + getProductDetails(productName: string): Product*
+    }
+    
+    class FacilityManager {
+        - HashTable* facilityRegistry
+        - Graph* cityGraph
+        + addFacility(facility: PublicFacility)
+        + findNearestFacility(location: string, type: string): PublicFacility*
+        + getFacilitiesByType(type: string): vector<PublicFacility*>
+    }
+    
+    class PopulationManager {
+        - NaryTree* housingHierarchy
+        - HashTable* citizenRegistry
+        - Stack* surveyHistory
+        + addSector(sectorName: string)
+        + addStreet(sector: string, streetName: string)
+        + addHouse(sector: string, street: string, house: House)
+        + registerCitizen(citizen: Citizen)
+        + searchCitizen(cnic: string): Citizen*
+        + generateAgeDistribution(): map<string, int>
+        + generateOccupationSummary(): map<string, int>
+        + calculatePopulationDensity(): double
+        + getGenderRatio(): pair<int, int>
+    }
+}
+
+' Managers use Core Data Structures
+TransportManager --> Graph
+TransportManager --> HashTable
+TransportManager --> LinkedList
+
+EducationManager --> HashTable
+EducationManager --> NaryTree
+EducationManager --> PriorityQueue
+EducationManager --> Graph
+
+MedicalManager --> HashTable
+MedicalManager --> Graph
+MedicalManager --> PriorityQueue
+
+CommercialManager --> HashTable
+CommercialManager --> Graph
+
+FacilityManager --> HashTable
+FacilityManager --> Graph
+
+PopulationManager --> NaryTree
+PopulationManager --> HashTable
+PopulationManager --> Stack
+
+' Managers manage Business Entities
+TransportManager --> Bus
+TransportManager --> BusStop
+
+EducationManager --> School
+EducationManager --> Department
+EducationManager --> Class
+EducationManager --> Student
+
+MedicalManager --> Hospital
+MedicalManager --> Doctor
+MedicalManager --> Patient
+MedicalManager --> Pharmacy
+MedicalManager --> Medicine
+
+CommercialManager --> ShoppingMall
+CommercialManager --> Product
+
+FacilityManager --> PublicFacility
+
+PopulationManager --> Citizen
+PopulationManager --> House
+
+' ============================================
+' MAIN SYSTEM
+' ============================================
+
+class SmartCitySystem {
+    - TransportManager* transport
+    - EducationManager* education
+    - MedicalManager* medical
+    - CommercialManager* commercial
+    - FacilityManager* facilities
+    - PopulationManager* population
+    - Graph* masterCityGraph
+    + initialize()
+    + loadSampleData()
+    + displayMainMenu()
+    + run()
+}
+
+SmartCitySystem *-- TransportManager
+SmartCitySystem *-- EducationManager
+SmartCitySystem *-- MedicalManager
+SmartCitySystem *-- CommercialManager
+SmartCitySystem *-- FacilityManager
+SmartCitySystem *-- PopulationManager
+SmartCitySystem --> Graph
+
+' ============================================
+' NOTES AND LEGENDS
+' ============================================
+
+note top of Graph
+  **Implementation: Adjacency List**
+  - Used for city road network
+  - Weighted edges (distances)
+  - Dijkstra's for shortest path
+  - BFS for nearest location
+  
+  **Time Complexity:**
+  - Add Vertex: O(1)
+  - Add Edge: O(1)
+  - Dijkstra: O((V+E)logV)
+  - BFS: O(V+E)
+end note
+
+note top of HashTable
+  **Implementation: Separate Chaining**
+  - Custom polynomial rolling hash
+  - Linked list for collisions
+  
+  **Time Complexity:**
+  - Insert: O(1) average
+  - Search: O(1) average
+  - Delete: O(1) average
+  
+  **Used for:**
+  - Bus lookup by number
+  - Citizen lookup by CNIC
+  - Medicine search
+  - Product search
+end note
+
+note top of NaryTree
+  **Implementation: General Tree**
+  - Each node has dynamic children
+  
+  **Used for:**
+  - School hierarchy (School→Dept→Class)
+  - Housing (Sector→Street→House→Family)
+  - Islamabad administrative divisions
+  
+  **Time Complexity:**
+  - Insert: O(1) with parent reference
+  - Search: O(n) worst case
+  - Traverse: O(n)
+end note
+
+note top of PriorityQueue
+  **Implementation: Binary Heap**
+  - Min-heap or Max-heap
+  
+  **Used for:**
+  - Emergency bed allocation (max-heap)
+  - School rankings (min-heap)
+  - Nearest facility queries
+  
+  **Time Complexity:**
+  - Insert: O(log n)
+  - Extract: O(log n)
+  - Peek: O(1)
+end note
+
+note top of LinkedList
+  **Implementation: Singly Linked**
+  
+  **Used for:**
+  - Bus route stops (ordered)
+  - Hash table chaining
+  - Student lists in classes
+  
+  **Time Complexity:**
+  - Insert at end: O(1) with tail
+  - Search: O(n)
+  - Delete: O(n)
+end note
+
+note top of CircularQueue
+  **Implementation: Array-based**
+  
+  **Used for:**
+  - Passenger queue simulation
+  - Bus boarding system
+  
+  **Time Complexity:**
+  - Enqueue: O(1)
+  - Dequeue: O(1)
+end note
+
+note top of Stack
+  **Implementation: Linked List**
+  
+  **Used for:**
+  - Route travel history
+  - Undo operations
+  
+  **Time Complexity:**
+  - Push: O(1)
+  - Pop: O(1)
+  - Peek: O(1)
+end note
+
+@enduml
